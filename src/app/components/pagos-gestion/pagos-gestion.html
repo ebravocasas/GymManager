@@ -1,0 +1,80 @@
+<div class="gym-form-card gym-container">
+  <div class="gym-header">
+    <h3>Historial de Ingresos</h3>
+    <div class="resumen-caja">
+      <span class="resumen-label">Recaudación de {{ nombreMesActual }}:</span>
+      <span class="resumen-monto"> {{ calcularTotalRecaudado() }}€ </span>
+    </div>
+  </div>
+
+  <!-- Controles de Filtro y Exportación -->
+  <div class="filters-toolbar">
+    <p-datepicker
+      [(ngModel)]="rangoFechas"
+      selectionMode="range"
+      [readonlyInput]="true"
+      placeholder="Filtrar por rango de fechas..."
+      (onSelect)="filtrarPorRango()"
+      [showIcon]="true"
+      styleClass="search-container"
+    ></p-datepicker>
+
+    <p-button
+      *ngIf="rangoFechas"
+      icon="pi pi-filter-slash"
+      severity="secondary"
+      [text]="true"
+      (onClick)="limpiarFiltros()"
+      pTooltip="Limpiar filtros"
+    ></p-button>
+
+    <p-button
+      label="Exportar CSV"
+      icon="pi pi-download"
+      severity="success"
+      (onClick)="exportarCSV()"
+      [disabled]="listaPagosFiltrada.length === 0"
+    ></p-button>
+  </div>
+
+  <p-table
+    [value]="listaPagosFiltrada"
+    [rows]="10"
+    [paginator]="true"
+    class="custom-table"
+    sortField="fechaPago"
+    [sortOrder]="-1"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Fecha y Hora</th>
+        <th>Socio</th>
+        <th>Concepto</th>
+        <th class="text-right">Importe</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pago>
+      <tr>
+        <td class="col-fecha">
+          {{ pago.fechaDate | date: 'dd/MM/yyyy HH:mm' }}
+        </td>
+        <td class="col-socio">{{ pago.clienteNombre }}</td>
+        <td>
+          <span class="badge-concepto">
+            {{ pago.tarifaNombre }}
+          </span>
+        </td>
+        <td class="text-right col-importe">+{{ pago.importe }}€</td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="empty-state">
+          <i class="pi pi-money-bill"></i>
+          No hay pagos registrados todavía.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

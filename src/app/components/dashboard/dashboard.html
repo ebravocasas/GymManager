@@ -1,0 +1,83 @@
+<div class="gym-container">
+  <div class="dashboard-grid">
+    <!-- Card 1: Calendario -->
+    <div class="gym-form-card dashboard-card">
+      <h5>Consulta de Fecha</h5>
+      <p-datepicker [(ngModel)]="fechaActual" [inline]="true" styleClass="w-full"></p-datepicker>
+    </div>
+
+    <!-- Card 2: Reloj Digital -->
+    <div class="gym-form-card dashboard-card clock-card">
+      <h5>Hora del Sistema</h5>
+      <div class="clock-display">{{ horaActual | date: 'HH:mm:ss' }}</div>
+    </div>
+
+    <!-- Card 2: Socios Activos -->
+    <div class="gym-form-card dashboard-card stats-card active">
+      <div class="stats-icon">
+        <i class="pi pi-users"></i>
+      </div>
+      <div class="stats-content">
+        <span class="stats-label">Socios Activos</span>
+        <span class="stats-value">{{ totalActivos }}</span>
+      </div>
+    </div>
+
+    <!-- Card 3: Socios Inactivos -->
+    <div
+      class="gym-form-card dashboard-card stats-card inactive clickable"
+      (click)="totalInactivos > 0 ? (mostrarInactivos = true) : null"
+    >
+      <div class="stats-icon">
+        <i class="pi pi-user-minus"></i>
+      </div>
+      <div class="stats-content">
+        <span class="stats-label">Socios Inactivos</span>
+        <span class="stats-value">{{ totalInactivos }}</span>
+        <small *ngIf="totalInactivos > 0" class="stats-helper">Haga clic para ver detalles</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Socios Inactivos -->
+  <p-dialog
+    header="Socios con Suscripción Vencida"
+    [(visible)]="mostrarInactivos"
+    [modal]="true"
+    styleClass="dialog-inactivos"
+    appendTo="body"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <p-table [value]="listaInactivos" class="custom-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nombre</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-cliente>
+        <tr>
+          <td>{{ cliente.nombre }} {{ cliente.apellidos }}</td>
+          <td class="actions-column">
+            <div class="actions-wrapper">
+              <p-button
+                icon="pi pi-euro"
+                label="Renovar"
+                severity="success"
+                [text]="true"
+                (onClick)="registrarCobro(cliente)"
+              ></p-button>
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [text]="true"
+                (onClick)="eliminarCliente(cliente)"
+              ></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-dialog>
+</div>

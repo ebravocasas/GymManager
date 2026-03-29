@@ -1,0 +1,172 @@
+<div class="gym-form-card gym-container">
+  <div class="gym-header">
+    <h3>Configuración de Tarifas</h3>
+    <p-button label="Nueva Tarifa" icon="pi pi-plus" severity="success" (onClick)="abrirAlta()">
+    </p-button>
+  </div>
+
+  <p-table
+    [value]="listaTarifas"
+    [rows]="10"
+    [paginator]="true"
+    class="custom-table"
+    sortField="duracionDias"
+    [sortOrder]="1"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nombre de Tarifa</th>
+        <th>Precio</th>
+        <th pSortableColumn="duracionDias">
+          Duración <p-sortIcon field="duracionDias"></p-sortIcon>
+        </th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-tarifa>
+      <tr>
+        <td>{{ tarifa.nombre }}</td>
+        <td>{{ tarifa.precio }}€</td>
+        <td>
+          <span class="status-active">
+            {{ tarifa.duracionDias }} {{ tarifa.duracionDias === 1 ? 'día' : 'días' }}
+          </span>
+        </td>
+        <td class="text-center">
+          <div class="actions-cell">
+            <p-button
+              icon="pi pi-pencil"
+              [rounded]="true"
+              [text]="true"
+              severity="secondary"
+              (onClick)="verDetalleTarifa(tarifa)"
+            ></p-button>
+            <p-button
+              icon="pi pi-trash"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              (onClick)="eliminarTarifa(tarifa)"
+            ></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  header="Crear Nueva Tarifa"
+  [(visible)]="mostrarModalAlta"
+  [modal]="true"
+  [focusOnShow]="false"
+  styleClass="dialog-tarifa"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="gym-form-grid single-column-grid" [formGroup]="formTarifa">
+    <div class="gym-field-group">
+      <label>Nombre de la Tarifa</label>
+      <input pInputText formControlName="nombre" placeholder="Ej: Pase Diario o Mensual VIP" />
+      <small class="p-error" *ngIf="f['nombre'].touched && f['nombre'].invalid">
+        El nombre debe tener al menos 3 caracteres.
+      </small>
+    </div>
+
+    <div class="gym-field-group">
+      <label>Precio (€)</label>
+      <input pInputText type="number" formControlName="precio" placeholder="0.00" class="w-full" />
+      <small class="p-error" *ngIf="f['precio'].touched && f['precio'].invalid">
+        El precio debe ser mayor a 0.
+      </small>
+    </div>
+
+    <div class="gym-field-group">
+      <label>Duración (en días)</label>
+      <input
+        pInputText
+        type="number"
+        formControlName="duracionDias"
+        placeholder="Ej: 1, 7 o 30"
+        class="w-full"
+      />
+      <small class="p-error" *ngIf="f['duracionDias'].touched && f['duracionDias'].invalid">
+        La duración debe ser entre 1 y 365 días.
+      </small>
+    </div>
+
+    <div class="modal-footer">
+      <p-button
+        label="Cancelar"
+        severity="secondary"
+        [outlined]="true"
+        styleClass="w-full"
+        (onClick)="mostrarModalAlta = false"
+      >
+      </p-button>
+      <p-button
+        label="Guardar Tarifa"
+        severity="success"
+        styleClass="w-full"
+        (onClick)="guardarTarifa()"
+      >
+      </p-button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog
+  header="Editar Tarifa"
+  [(visible)]="mostrarModalEdicion"
+  [modal]="true"
+  [focusOnShow]="false"
+  styleClass="dialog-tarifa"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="gym-form-grid single-column-grid" [formGroup]="formTarifa">
+    <div class="gym-field-group">
+      <label>Nombre</label>
+      <input pInputText formControlName="nombre" />
+      <small class="p-error" *ngIf="f['nombre'].touched && f['nombre'].invalid">
+        Mínimo 3 caracteres.
+      </small>
+    </div>
+
+    <div class="gym-field-group">
+      <label>Precio (€)</label>
+      <input pInputText type="number" formControlName="precio" class="w-full" />
+      <small class="p-error" *ngIf="f['precio'].touched && f['precio'].invalid">
+        Precio inválido.
+      </small>
+    </div>
+
+    <div class="gym-field-group">
+      <label>Duración (en días)</label>
+      <input pInputText type="number" formControlName="duracionDias" class="w-full" />
+      <small class="p-error" *ngIf="f['duracionDias'].touched && f['duracionDias'].invalid">
+        Duración inválida.
+      </small>
+    </div>
+
+    <div class="modal-footer">
+      <p-button
+        label="Descartar"
+        severity="secondary"
+        [outlined]="true"
+        styleClass="w-full"
+        (onClick)="mostrarModalEdicion = false"
+      >
+      </p-button>
+      <p-button
+        label="Actualizar Tarifa"
+        icon="pi pi-save"
+        severity="success"
+        styleClass="w-full"
+        (onClick)="actualizarTarifa()"
+      >
+      </p-button>
+    </div>
+  </div>
+</p-dialog>

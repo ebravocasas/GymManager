@@ -1,0 +1,297 @@
+/* Contenedor principal del formulario (La Tarjeta) */
+.gym-form-card {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  border: 1px solid #333;
+
+  h2 {
+    text-align: center;
+    color: white;
+    margin-bottom: 2rem;
+  }
+}
+
+/* --- GRID Y FORMULARIOS --- */
+.gym-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+  padding: 1rem 0;
+}
+
+/* Grupo de etiqueta + input */
+.gym-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-weight: bold;
+    color: #81c784;
+  }
+}
+
+/* Reset para componentes de PrimeNG (Forzar ancho 100%) */
+.p-inputtext,
+.p-inputnumber,
+.p-select,
+.p-button {
+  width: 100% !important;
+}
+
+/* Forzar que el DatePicker de PrimeNG también sea responsivo y del mismo ancho */
+.p-datepicker {
+  width: 100% !important;
+}
+
+/* Ajuste para que el input dentro del calendario herede el estilo */
+.p-datepicker-input {
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 10px;
+}
+
+textarea:focus {
+  border-color: #81c784 !important;
+  outline: none;
+}
+
+/* Añade el textarea al grupo de resets */
+.p-inputtext,
+.p-inputnumber,
+.p-select,
+.p-button,
+.p-textarea {
+  /* Nueva clase para el textarea de PrimeNG */
+  width: 100% !important;
+}
+
+/* Estilo específico para el área de observaciones */
+.p-textarea {
+  background-color: transparent !important;
+  color: white !important;
+  border: 1px solid #333 !important;
+  border-radius: 6px !important;
+  padding: 10px !important;
+  font-family: inherit;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  &:focus {
+    border-color: #81c784 !important; /* El verde de tus etiquetas */
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(129, 199, 132, 0.2);
+  }
+
+  &::placeholder {
+    color: #666;
+  }
+}
+
+/* Estilos para la tabla en modo oscuro */
+.p-datatable {
+  background: #1e1e1e !important;
+  color: white !important;
+
+  .p-datatable-thead > tr > th {
+    background: #2a2a2a !important;
+    color: #81c784 !important;
+    border-bottom: 1px solid #333;
+  }
+
+  .p-datatable-tbody > tr {
+    background: #1e1e1e !important;
+    color: white !important;
+    border-bottom: 1px solid #333;
+  }
+}
+
+/* Badges y estados */
+.badge-tarifa {
+  background: #2e7d32;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.status-active {
+  color: #81c784;
+  font-weight: bold;
+}
+
+.status-inactive {
+  color: #e57373;
+}
+
+/* Paginador */
+.p-paginator {
+  background: #1e1e1e !important;
+  border: none !important;
+
+  button {
+    color: white !important;
+  }
+}
+
+/* Estilo para el Modal de PrimeNG */
+.p-dialog {
+  .p-dialog-header {
+    background: #1e1e1e !important;
+    color: white !important;
+    border-bottom: 1px solid #333;
+  }
+
+  .p-dialog-content {
+    background: #1e1e1e !important;
+    color: white !important;
+  }
+
+  .p-dialog-footer {
+    background: #1e1e1e !important;
+  }
+}
+
+.status-active {
+  color: #81c784;
+  font-weight: bold;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.gym-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+}
+
+.gym-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h3 {
+    color: white;
+    margin: 0;
+  }
+}
+
+/* --- TABLA --- */
+.actions-cell {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.gym-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    color: #81c784; // Color verde para etiquetas
+    font-size: 0.9rem;
+  }
+}
+
+.single-column-grid {
+  grid-template-columns: 1fr !important; // Fuerza el diseño vertical
+}
+
+.flex-row-gap {
+  display: flex;
+  gap: 15px; // Espacio entre campos agrupados
+  width: 100%;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.full-width-column {
+  grid-column: 1 / -1;
+}
+
+/* --- MODALES Y DIÁLOGOS --- */
+.modal-footer {
+  display: flex;
+  gap: 10px;
+  margin-top: 2rem;
+  grid-column: 1 / -1;
+}
+
+.dni-disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
+
+/* --- UTILIDADES --- */
+.w-full {
+  width: 100% !important;
+}
+
+.p-datatable-header {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 0 1rem 0 !important;
+}
+
+.table-header-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 300px;
+}
+
+.p-input-icon-left {
+  position: relative;
+
+  i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #81c784;
+    z-index: 1;
+  }
+
+  input {
+    padding-left: 35px !important;
+  }
+}
+
+/* --- AJUSTE BOTÓN CIERRE MODALES --- */
+:host ::ng-deep {
+  .p-dialog-header-icon,
+  .p-dialog-close-button {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    transition:
+      background 0.2s,
+      color 0.2s !important;
+    background: transparent !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #ff8a80 !important;
+    }
+  }
+}

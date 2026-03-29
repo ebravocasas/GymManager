@@ -1,0 +1,56 @@
+@import 'primeicons/primeicons.css';
+
+:root {
+  --font-family:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: #0c0c0c; /* Un fondo un poco más profundo */
+  color: #e0e0e0;
+  -webkit-font-smoothing: antialiased; /* Hace que la fuente se vea más fina y nítida */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mejora opcional para los títulos */
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  letter-spacing: -0.02em; /* Estética de aplicación moderna */
+}
+
+/* Esto obliga a que los desplegables se expandan al contenedor */
+/* Añade esto a tu src/styles.scss */
+.p-select {
+  width: 100% !important;
+  background-color: #2a2a2a !important; /* Para que case con el tema oscuro */
+}
+
+.p-select-label {
+  padding: 10px !important;
+}
+
+.p-inputtext {
+  width: 100% !important;
+}
+
+/* Estilos Globales para el Logo */
+.nav-logo-link,
+.nav-logo-link:visited,
+.nav-logo-link:hover,
+.nav-logo-link:active {
+  text-decoration: none !important; /* Elimina el subrayado siempre */
+  color: #81c784 !important; /* Mantiene el verde siempre */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  outline: none; /* Elimina el recuadro de selección */
+}
+
+.nav-logo-icon {
+  color: #81c784;
+  font-size: 1.5rem;
+}

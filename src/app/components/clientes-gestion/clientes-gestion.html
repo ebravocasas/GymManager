@@ -1,0 +1,322 @@
+<div class="gym-form-card gym-container">
+  <div class="gym-header">
+    <h3>Listado de Socios</h3>
+    <p-button label="Nuevo Socio" icon="pi pi-plus" severity="success" (onClick)="abrirModal()">
+    </p-button>
+  </div>
+
+  <p-table
+    #dt
+    [value]="listaClientes"
+    [rows]="10"
+    [paginator]="true"
+    class="custom-table"
+    sortField="apellidos"
+    [sortOrder]="1"
+    [globalFilterFields]="['nombre', 'apellidos', 'dni']"
+  >
+    <ng-template pTemplate="caption">
+      <div class="table-header-container">
+        <span class="p-input-icon-left search-container">
+          <i class="pi pi-search search-icon"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Buscar por nombre, apellido o DNI..."
+            class="w-full"
+          />
+        </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="apellidos">Apellidos <p-sortIcon field="apellidos"></p-sortIcon></th>
+        <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+        <th>Tarifa</th>
+        <th class="text-center">Vencimiento</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-cliente>
+      <tr>
+        <td class="col-apellidos">{{ cliente.apellidos }}</td>
+        <td>{{ cliente.nombre }}</td>
+        <td>
+          <span class="badge-tarifa">{{ getNombreTarifa(cliente.tarifaId) }}</span>
+        </td>
+        <td class="text-center">
+          @if (calcularVencimiento(cliente); as fechaVence) {
+            <span
+              class="vencimiento-badge"
+              [ngClass]="{
+                vencido: esFechaPasada(fechaVence),
+                'al-dia': !esFechaPasada(fechaVence),
+              }"
+            >
+              <i
+                class="pi"
+                [ngClass]="esFechaPasada(fechaVence) ? 'pi-exclamation-circle' : 'pi-check-circle'"
+              ></i>
+              {{ fechaVence | date: 'dd/MM/yy' }}
+            </span>
+          }
+        </td>
+        <td class="text-center">
+          <div class="actions-container">
+            <p-button
+              icon="pi pi-euro"
+              [rounded]="true"
+              [text]="true"
+              severity="success"
+              (onClick)="registrarCobro(cliente)"
+            ></p-button>
+
+            <p-button
+              icon="pi pi-eye"
+              [rounded]="true"
+              [text]="true"
+              severity="secondary"
+              (onClick)="verDetalle(cliente)"
+            ></p-button>
+
+            <p-button
+              icon="pi pi-trash"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              (onClick)="eliminarCliente(cliente)"
+            ></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5" class="empty-table-msg">No se han encontrado socios registrados.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  header="Registrar Nuevo Socio"
+  [(visible)]="mostrarModal"
+  [modal]="true"
+  [focusOnShow]="false"
+  styleClass="dialog-tarifa"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="gym-form-grid single-column-grid" [formGroup]="formCliente">
+    <div class="gym-field-group">
+      <label>Nombre Completo</label>
+      <div class="flex-row-gap">
+        <div class="flex-1">
+          <input pInputText formControlName="nombre" placeholder="Nombre" class="w-full" />
+          <small class="p-error" *ngIf="f['nombre'].touched && f['nombre'].invalid">
+            Mín. 2 letras.
+          </small>
+        </div>
+        <div class="flex-1">
+          <input pInputText formControlName="apellidos" placeholder="Apellidos" class="w-full" />
+          <small class="p-error" *ngIf="f['apellidos'].touched && f['apellidos'].invalid"
+            >Requerido.</small
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="gym-field-group">
+      <label>DNI / Teléfono</label>
+      <div class="flex-row-gap">
+        <div class="flex-1">
+          <input pInputText formControlName="dni" placeholder="DNI" class="w-full" />
+          <small class="p-error" *ngIf="f['dni'].touched && f['dni'].hasError('pattern')">
+            Formato inválido.
+          </small>
+          <small class="p-error" *ngIf="f['dni'].hasError('dniDuplicado')"> Ya registrado. </small>
+        </div>
+        <div class="flex-1">
+          <input pInputText formControlName="telefono" placeholder="Teléfono" class="w-full" />
+          <small class="p-error" *ngIf="f['telefono'].touched && f['telefono'].invalid"
+            >Requerido.</small
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="gym-field-group">
+      <label>Tarifa</label>
+      <p-select
+        [options]="listaTarifas"
+        formControlName="tarifaId"
+        optionLabel="nombre"
+        optionValue="id"
+        placeholder="Seleccione tarifa"
+        styleClass="w-full"
+      ></p-select>
+      <small class="p-error" *ngIf="f['tarifaId'].touched && f['tarifaId'].invalid"
+        >Selecciona una tarifa.</small
+      >
+    </div>
+    <div class="gym-field-group">
+      <label>Forma de Pago</label>
+      <p-select
+        [options]="formasPago"
+        formControlName="formaPago"
+        optionLabel="label"
+        optionValue="value"
+        styleClass="w-full"
+      ></p-select>
+    </div>
+    <div class="gym-field-group">
+      <label>Fecha Alta</label>
+      <p-datepicker
+        formControlName="fechaAlta"
+        [showIcon]="true"
+        dateFormat="dd/mm/yy"
+        styleClass="w-full"
+      ></p-datepicker>
+    </div>
+    <div class="gym-field-group">
+      <label>Observaciones</label>
+      <textarea
+        rows="3"
+        pTextarea
+        formControlName="observaciones"
+        placeholder="Lesiones, avisos, etc..."
+        class="w-full"
+      ></textarea>
+    </div>
+    <div class="modal-footer">
+      <p-button
+        label="Cancelar"
+        severity="secondary"
+        [outlined]="true"
+        styleClass="w-full"
+        (onClick)="mostrarModal = false"
+      ></p-button>
+      <p-button
+        label="Guardar Socio"
+        severity="success"
+        styleClass="w-full"
+        (onClick)="guardarCliente()"
+      ></p-button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog
+  header="Ficha del Socio"
+  [(visible)]="mostrarDetalle"
+  [modal]="true"
+  [focusOnShow]="false"
+  styleClass="dialog-tarifa"
+  [draggable]="false"
+  [resizable]="false"
+>
+  @if (clienteSeleccionado) {
+    <div class="gym-form-grid single-column-grid" [formGroup]="formCliente">
+      <div class="gym-field-group">
+        <label>Nombre Completo</label>
+        <div class="flex-row-gap">
+          <div class="flex-1">
+            <input pInputText formControlName="nombre" class="w-full" />
+          </div>
+          <div class="flex-1">
+            <input pInputText formControlName="apellidos" class="w-full" />
+          </div>
+        </div>
+      </div>
+      <div class="gym-field-group">
+        <label>DNI / Teléfono</label>
+        <div class="flex-row-gap">
+          <input pInputText formControlName="dni" class="w-full" />
+          <input pInputText formControlName="telefono" class="w-full" />
+        </div>
+        <small class="p-error" *ngIf="f['dni'].touched && f['dni'].hasError('pattern')">
+          DNI incorrecto (8 números y 1 letra).
+        </small>
+      </div>
+      <div class="gym-field-group">
+        <label>Tarifa Actual</label>
+        <p-select
+          [options]="listaTarifas"
+          formControlName="tarifaId"
+          optionLabel="nombre"
+          optionValue="id"
+          styleClass="w-full"
+        ></p-select>
+      </div>
+      <div class="gym-field-group">
+        <label>Forma de Pago habitual</label>
+        <p-select
+          [options]="formasPago"
+          formControlName="formaPago"
+          optionLabel="label"
+          optionValue="value"
+          styleClass="w-full"
+        ></p-select>
+      </div>
+
+      <div class="gym-field-group">
+        @if (calcularVencimiento(clienteSeleccionado); as vencimiento) {
+          <div
+            class="vencimiento-card"
+            [ngClass]="{
+              vencido: esFechaPasada(vencimiento),
+              'al-dia': !esFechaPasada(vencimiento),
+            }"
+          >
+            <span class="vencimiento-label">
+              Vencimiento: {{ vencimiento | date: 'dd/MM/yyyy' }}
+            </span>
+          </div>
+        }
+      </div>
+
+      <!-- Bloque de Último Pago -->
+      <div class="gym-field-group">
+        <label>Último Pago Registrado</label>
+        <div *ngIf="ultimoPago" class="pago-info-card">
+          <span class="pago-fecha">
+            <i class="pi pi-calendar"></i>
+            {{ ultimoPago.fechaPago | date: 'dd/MM/yyyy' }}
+          </span>
+          <span class="pago-detalle">
+            {{ ultimoPago.importe }}€ ({{ ultimoPago.tarifaNombre }})
+          </span>
+        </div>
+        <div *ngIf="!ultimoPago" class="pago-empty">
+          <small>No hay pagos registrados aún</small>
+        </div>
+      </div>
+
+      <div class="gym-field-group">
+        <label>Observaciones</label>
+        <textarea rows="3" pTextarea formControlName="observaciones" class="w-full"></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <p-button
+          label="Cerrar"
+          severity="secondary"
+          [outlined]="true"
+          styleClass="w-full"
+          (onClick)="mostrarDetalle = false"
+        ></p-button>
+        <p-button
+          label="Actualizar Ficha"
+          icon="pi pi-save"
+          severity="success"
+          styleClass="w-full"
+          (onClick)="actualizarCliente()"
+        ></p-button>
+      </div>
+    </div>
+  }
+</p-dialog>

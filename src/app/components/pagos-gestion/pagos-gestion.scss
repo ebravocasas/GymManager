@@ -1,0 +1,118 @@
+.gym-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.5rem;
+  }
+}
+
+.resumen-caja {
+  display: flex;
+  align-items: baseline; // Alinea mejor el texto con el número grande
+  gap: 10px;
+}
+
+.resumen-label {
+  color: #aaa;
+  margin-right: 10px;
+}
+
+.resumen-monto {
+  color: #81c784;
+  font-weight: bold;
+  font-size: 2.5rem !important; // Ahora sí se verá grande
+  display: inline-block;
+  line-height: 1;
+  margin-left: 5px;
+  text-shadow: 0 0 10px rgba(129, 199, 132, 0.2); // Un pequeño brillo para resaltar
+}
+
+.filters-toolbar {
+  margin-bottom: 1.5rem !important;
+  display: flex !important;
+  align-items: flex-end !important; // Alinea el botón por la base del buscador
+  justify-content: flex-start !important;
+  gap: 20px !important; // Espacio equilibrado entre elementos
+  flex-wrap: wrap;
+
+  .search-container {
+    width: 320px !important;
+    flex: none !important;
+    display: inline-flex !important; // Mantiene el input y el botón en línea
+    margin-right: 15px; // Margen de seguridad extra
+
+    // Evita que el input fuerce el 100% y baje el icono
+    .p-inputtext {
+      flex: 1 1 auto !important;
+      width: 1% !important;
+      min-width: 0 !important;
+      height: 42px !important;
+    }
+
+    // Ajuste del botón del calendario (el icono)
+    .p-datepicker-trigger {
+      width: 42px !important;
+      height: 42px !important;
+      flex: none !important;
+    }
+  }
+
+  p-button {
+    width: auto !important;
+    display: inline-block !important;
+    margin-right: 10px; // Espacio entre el botón de limpiar y exportar
+  }
+
+  .p-button {
+    width: auto !important;
+    height: 42px !important;
+    padding: 0 1.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+  }
+}
+
+.col-fecha {
+  color: #aaa;
+}
+
+.col-socio {
+  font-weight: bold;
+}
+
+.badge-concepto {
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.col-importe {
+  color: #81c784;
+  font-weight: bold;
+}
+
+.empty-state {
+  padding: 3rem;
+  color: #666;
+  text-align: center;
+
+  i {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 1rem;
+    color: #444;
+  }
+}
+
+.text-right {
+  text-align: right;
+}

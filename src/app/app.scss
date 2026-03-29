@@ -1,0 +1,64 @@
+/* Eliminamos el borde de caja y dejamos solo la línea inferior */
+.p-menubar {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 1px solid #333 !important; /* Línea gris sutil abajo */
+  border-radius: 0 !important; /* Quitamos las esquinas redondeadas para que toque los bordes */
+  background-color: #121212 !important; /* Aseguramos que el fondo sea el mismo que el de la app */
+  padding: 0.5rem 1rem !important;
+}
+
+.gym-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e1e1e;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #333;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.2rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+
+    a {
+      color: #aaa;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: all 0.3s;
+
+      &:hover {
+        color: #fff;
+        background: #2a2a2a;
+      }
+
+      &.active-link {
+        color: #81c784;
+        background: rgba(129, 199, 132, 0.1);
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.main-content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}

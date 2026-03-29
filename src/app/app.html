@@ -1,0 +1,41 @@
+@if (authService.user$ | async) {
+  <nav class="gym-nav">
+    <div class="nav-logo">
+      <a routerLink="/dashboard" class="nav-logo-link">
+        <i class="pi pi-bolt nav-logo-icon"></i>
+        <span>GYM MANAGER</span>
+      </a>
+    </div>
+
+    <div class="nav-links">
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="pi pi-home"></i> Dashboard
+      </a>
+
+      <a
+        routerLink="/clientes"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="pi pi-users"></i> Socios
+      </a>
+
+      <a routerLink="/tarifas" routerLinkActive="active-link">
+        <i class="pi pi-list"></i> Tarifas
+      </a>
+
+      <a routerLink="/pagos" routerLinkActive="active-link">
+        <i class="pi pi-wallet"></i> Historial de Pagos
+      </a>
+    </div>
+    <p-button icon="pi pi-sign-out" [text]="true" (onClick)="logout()"></p-button>
+  </nav>
+}
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
