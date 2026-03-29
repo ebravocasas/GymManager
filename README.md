@@ -86,7 +86,7 @@ La aplicación utiliza una paleta de colores de alto contraste sobre fondo oscur
     ```bash
     ng serve
     npm run electron (solo si quieres arrancarlo encapsulado en Electron)
-    npm run package-electron (solo si quieres encampularlo en Electron generando un archivo ejecutable de Windows para instalación)
+    npm run package-electron (solo si quieres encampularlo en Electron generando un archivo ejecutable de Windows para instalación), en caso de error con este comando, reinstalar electron.builder (npm install --save-dev electron-builder), al ejecutarlo, debería aparecer una carpeta llamada release.
     ```
     La aplicación estará disponible en `http://localhost:4200`.
 
