@@ -36,8 +36,8 @@ Sistema de gestión integral para gimnasios y centros deportivos. Una aplicació
 
 ## 🛠️ Stack Tecnológico
 
-- **Frontend:** [Angular 18+](https://angular.io/) (Standalone Components).
-- **UI Library:** [PrimeNG 18+](https://primeng.org/) (Aura Theme - Dark Mode).
+- **Frontend:** [Angular 21](https://angular.io/) (Standalone Components).
+- **UI Library:** [PrimeNG](https://primeng.org/) (Aura Theme - Dark Mode).
 - **Backend & DB:** [Firebase Firestore](https://firebase.google.com/docs/firestore).
 - **Notificaciones:** [SweetAlert2](https://sweetalert2.github.io/) para diálogos de confirmación y alertas de éxito/error.
 - **Estilos:** SCSS con arquitectura modular y encapsulación profunda (`::ng-deep`) para personalización de componentes externos.
