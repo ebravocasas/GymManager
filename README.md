@@ -85,6 +85,8 @@ La aplicación utiliza una paleta de colores de alto contraste sobre fondo oscur
 4.  **Ejecutar en desarrollo:**
     ```bash
     ng serve
+    npm run electron (solo si quieres arrancarlo encapsulado en Electron)
+    npm run package-electron (solo si quieres encampularlo en Electron generando un archivo ejecutable de Windows para instalación)
     ```
     La aplicación estará disponible en `http://localhost:4200`.
 
