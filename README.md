@@ -21,6 +21,14 @@ Sistema de gestión integral para gimnasios y centros deportivos. Una aplicació
 - **Sistema de Vencimiento:** Indicadores visuales (Verde/Rojo) en la tabla principal según la fecha de expiración de la cuota.
 - **Renovación Ágil:** Botón de cobro rápido que actualiza la fecha de alta del socio y genera un registro de ingreso automáticamente.
 
+### 🏋️‍♂️ Gestión de Rutinas Personalizadas
+
+- **Estructura por Sesiones:** Organización de entrenamientos por días (Día 1, Día 2, etc.) mediante un sistema de acordeones colapsables.
+- **Edición Inline Ultra-rápida:** Uso de tablas editables para modificar nombres de ejercicios, series, repeticiones y notas sin abrir ventanas adicionales.
+- **Validación de Datos:** Control estricto para asegurar que cada ejercicio tenga nombre, series y repeticiones antes de permitir el guardado.
+- **Sincronización en Caliente:** Los cambios se reflejan inmediatamente en la ficha del socio y en el listado principal tras guardar en Firebase.
+- **Historial de Actualización:** Registro automático de la fecha de la última modificación de la rutina.
+
 ### 💳 Control de Ingresos e Historial
 
 - **Registro Automatizado:** Los pagos se generan tanto en nuevas altas como en renovaciones.
@@ -28,6 +36,12 @@ Sistema de gestión integral para gimnasios y centros deportivos. Una aplicació
 - **Reinicio Anual Visual:** La lista se filtra por defecto para mostrar el año en curso, manteniendo la interfaz limpia.
 - **Exportación de Datos:** Botón para descargar el historial de pagos filtrado en formato CSV compatible con Excel.
 - **Estadísticas en Firebase:** Almacenamiento de cierres mensuales para consultas históricas.
+
+### 🔒 Seguridad y Sesiones
+
+- **Persistencia Volátil:** Configuración de `browserSessionPersistence` para asegurar que la sesión se cierre automáticamente al salir de la aplicación o cerrar la pestaña.
+- **Cierre de Proceso en Electron:** Gestión de eventos en el proceso principal para garantizar la limpieza de credenciales al cerrar las ventanas.
+- **Protección de Datos:** Las credenciales no se almacenan en el disco local de forma permanente.
 
 ### 🏷️ Configuración de Tarifas
 

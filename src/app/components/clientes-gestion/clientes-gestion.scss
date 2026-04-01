@@ -37,8 +37,7 @@
 /* Reset para componentes de PrimeNG (Forzar ancho 100%) */
 .p-inputtext,
 .p-inputnumber,
-.p-select,
-.p-button {
+.p-select {
   width: 100% !important;
 }
 
@@ -64,7 +63,6 @@ textarea:focus {
 .p-inputtext,
 .p-inputnumber,
 .p-select,
-.p-button,
 .p-textarea {
   /* Nueva clase para el textarea de PrimeNG */
   width: 100% !important;

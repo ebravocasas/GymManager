@@ -24,6 +24,8 @@ import { Tarifas } from '../../services/tarifas';
 import { Clientes } from '../../services/clientes';
 import { Pagos } from '../../services/pagos';
 
+import { RutinaClienteComponent } from '../rutina-cliente/rutina-cliente.component';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -40,6 +42,7 @@ import Swal from 'sweetalert2';
     TextareaModule,
     TableModule,
     DialogModule,
+    RutinaClienteComponent,
   ],
   templateUrl: './clientes-gestion.html',
   styleUrl: './clientes-gestion.scss',
@@ -61,6 +64,7 @@ export class ClientesGestion implements OnInit {
   // Modales
   mostrarModal: boolean = false;
   mostrarDetalle: boolean = false;
+  mostrarRutina: boolean = false;
   clienteSeleccionado: any = null;
   ultimoPago: any = null; // Variable para almacenar el dato
 
@@ -260,6 +264,22 @@ export class ClientesGestion implements OnInit {
       } catch (error) {
         console.error('Fallo total en la operación:', error);
         Swal.fire('Error', 'No se pudo completar el registro del pago.', 'error');
+      }
+    }
+  }
+
+  abrirRutina() {
+    // Solo permitimos gestionar si hay un cliente seleccionado (ID existente)
+    this.mostrarRutina = true;
+  }
+
+  actualizarRutinaEnVista(nuevaRutina: any) {
+    if (this.clienteSeleccionado) {
+      this.clienteSeleccionado.rutina = nuevaRutina;
+      // Actualizamos también en la lista principal para mantener la coherencia local
+      const index = this.listaClientes.findIndex((c) => c.id === this.clienteSeleccionado.id);
+      if (index !== -1) {
+        this.listaClientes[index].rutina = nuevaRutina;
       }
     }
   }

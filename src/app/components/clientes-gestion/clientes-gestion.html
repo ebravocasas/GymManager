@@ -52,8 +52,8 @@
             <span
               class="vencimiento-badge"
               [ngClass]="{
-                vencido: esFechaPasada(fechaVence),
-                'al-dia': !esFechaPasada(fechaVence),
+                'status-inactive': esFechaPasada(fechaVence),
+                'status-active': !esFechaPasada(fechaVence),
               }"
             >
               <i
@@ -194,6 +194,13 @@
     </div>
     <div class="modal-footer">
       <p-button
+        label="Gestionar Rutina"
+        icon="pi pi-list"
+        severity="help"
+        styleClass="w-full"
+        (onClick)="abrirRutina()"
+      ></p-button>
+      <p-button
         label="Cancelar"
         severity="secondary"
         [outlined]="true"
@@ -268,8 +275,8 @@
           <div
             class="vencimiento-card"
             [ngClass]="{
-              vencido: esFechaPasada(vencimiento),
-              'al-dia': !esFechaPasada(vencimiento),
+              'status-inactive': esFechaPasada(vencimiento),
+              'status-active': !esFechaPasada(vencimiento),
             }"
           >
             <span class="vencimiento-label">
@@ -303,6 +310,13 @@
 
       <div class="modal-footer">
         <p-button
+          label="Gestionar Rutina"
+          icon="pi pi-list"
+          severity="help"
+          styleClass="w-full"
+          (onClick)="abrirRutina()"
+        ></p-button>
+        <p-button
           label="Cerrar"
           severity="secondary"
           [outlined]="true"
@@ -320,3 +334,11 @@
     </div>
   }
 </p-dialog>
+
+<!-- Componente de Rutina -->
+<app-rutina-cliente
+  [(visible)]="mostrarRutina"
+  [clienteId]="clienteSeleccionado?.id"
+  [rutina]="clienteSeleccionado?.rutina || { sesiones: [] }"
+  (rutinaActualizada)="actualizarRutinaEnVista($event)"
+></app-rutina-cliente>

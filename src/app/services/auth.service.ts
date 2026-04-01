@@ -1,5 +1,13 @@
 import { inject, Injectable } from '@angular/core';
-import { Auth, authState, signInWithEmailAndPassword, signOut, User } from '@angular/fire/auth';
+import {
+  Auth,
+  authState,
+  signInWithEmailAndPassword,
+  signOut,
+  User,
+  setPersistence,
+  browserSessionPersistence,
+} from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,7 +19,9 @@ export class AuthService {
   // Observable que emite el estado del usuario (null si no está logueado)
   user$: Observable<User | null> = authState(this.auth);
 
-  login(email: string, pass: string) {
+  async login(email: string, pass: string) {
+    // Configuramos la persistencia para que la sesión se destruya al cerrar la pestaña o app
+    await setPersistence(this.auth, browserSessionPersistence);
     return signInWithEmailAndPassword(this.auth, email, pass);
   }
 

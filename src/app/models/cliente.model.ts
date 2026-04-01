@@ -9,4 +9,22 @@ export interface Cliente {
   fechaAlta: Date;
   activo: boolean;
   observaciones?: string;
+  rutina?: Rutina;
+}
+
+export interface Rutina {
+  ultimaActualizacion?: any; // Puede ser Date o Timestamp de Firebase
+  sesiones: Sesion[];
+}
+
+export interface Sesion {
+  nombre: string;
+  ejercicios: Ejercicio[];
+}
+
+export interface Ejercicio {
+  nombre: string;
+  series: number;
+  reps: string;
+  notas: string;
 }

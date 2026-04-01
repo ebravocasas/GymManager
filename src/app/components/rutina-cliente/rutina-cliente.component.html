@@ -1,0 +1,112 @@
+<p-dialog
+  header="Gestión de Rutinas"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '70vw' }"
+  (onHide)="cerrar()"
+>
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    "
+  >
+    <div style="display: flex; gap: 15px">
+      <p-button
+        label="Añadir Sesión (Día)"
+        icon="pi pi-plus"
+        (onClick)="anadirDia()"
+        severity="success"
+      />
+      <p-button
+        label="Guardar Cambios"
+        icon="pi pi-save"
+        (onClick)="guardarRutina()"
+        severity="primary"
+      />
+    </div>
+
+    <div
+      *ngIf="rutinaEditada?.ultimaActualizacion"
+      style="color: #81c784; font-size: 0.9rem; font-style: italic"
+    >
+      Última actualización:
+      {{ getFecha(rutinaEditada.ultimaActualizacion) | date: 'dd/MM/yyyy HH:mm' }}
+    </div>
+  </div>
+
+  <p-accordion [multiple]="true" *ngIf="rutinaEditada.sesiones?.length > 0">
+    <p-accordion-panel *ngFor="let sesion of rutinaEditada.sesiones; let i = index" [value]="i">
+      <p-accordion-header>
+        <span class="font-bold">{{ sesion.nombre }}</span>
+      </p-accordion-header>
+      <p-accordion-content>
+        <p-table
+          [value]="sesion.ejercicios"
+          dataKey="nombre"
+          responsiveLayout="scroll"
+          styleClass="p-datatable-sm"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 30%">Ejercicio</th>
+              <th style="width: 100px">Series</th>
+              <th style="width: 150px">Reps</th>
+              <th style="width: 40%">Notas</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-ejercicio let-ri="rowIndex">
+            <tr>
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="ejercicio.nombre" class="w-full" />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ ejercicio.nombre || 'Nombre del ejercicio...' }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-inputNumber [(ngModel)]="ejercicio.series" [showButtons]="true" [min]="0" />
+                  </ng-template>
+                  <ng-template pTemplate="output">{{ ejercicio.series }}</ng-template>
+                </p-cellEditor>
+              </td>
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="ejercicio.reps" class="w-full" />
+                  </ng-template>
+                  <ng-template pTemplate="output">{{ ejercicio.reps || '12-15' }}</ng-template>
+                </p-cellEditor>
+              </td>
+              <td pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="ejercicio.notes" class="w-full" />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ ejercicio.notas || 'Sin notas...' }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-button
+          label="Añadir Ejercicio"
+          icon="pi pi-plus-circle"
+          (onClick)="anadirEjercicio(i)"
+          [text]="true"
+          severity="secondary"
+          class="mt-2"
+        />
+      </p-accordion-content>
+    </p-accordion-panel>
+  </p-accordion>
+</p-dialog>
